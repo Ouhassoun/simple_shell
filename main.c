@@ -14,7 +14,7 @@ int main(int argc, char *argv[], char *env[])
 	size_t n_buffer = 0;
 	char *dollar = "$ ", *buffer = NULL, command[50], *args[20], *only_command;
 
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, Jag_handle_sigint);
 	if (argc != 1)
 		Jag__printf("%s: 0: Can't open %s\n", argv[0], argv[1]), exit(1);
 	if (isatty(STDIN_FILENO) == 0)

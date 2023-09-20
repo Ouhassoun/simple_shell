@@ -34,7 +34,7 @@ char *Jag_take_only_cmd(char **buffer, int *no_exc, int argc,
 		perror("fail to allocate");
 		exit(1);
 	}
-	Jag_strcpy(cmd, str_cmd);
+	Jag__strcpy(cmd, str_cmd);
 	if (Jag__strcmp(cmd, "cd") == 0)
 	{
 		*no_exc = 0;
