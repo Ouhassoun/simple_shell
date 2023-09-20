@@ -1,44 +1,42 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * main - entry point
- * @ac: arg count
- * @av: arg vector
- *
- * Return: 0 on success, 1 on error
- */
-int main(int ac, char **av)
+ * @argc: number of arguments
+ * @argv: array of string
+ * @env: to get enviroment
+ * Return: alwayd int
+*/
+int main(int argc, char *argv[], char *env[])
 {
-	info_t info[] = { INFO_INIT };
-	int fd = 2;
+	int pipe = 1, err_count = 1, no_exc = 1, status;
+	const char *del = " ";
+	size_t n_buffer = 0;
+	char *dollar = "$ ", *buffer = NULL, command[50], *args[20], *only_command;
 
-	asm ("mov %1, %0\n\t"
-		"add $3, %0"
-		: "=r" (fd)
-		: "r" (fd));
-
-	if (ac == 2)
+	signal(SIGINT, handle_sigint);
+	if (argc != 1)
+		_printf("%s: 0: Can't open %s\n", argv[0], argv[1]), exit(1);
+	if (isatty(STDIN_FILENO) == 0)
+		non_interactive(argc, argv, env, &pipe);
+	while (pipe)
 	{
-		fd = open(av[1], O_RDONLY);
-		if (fd == -1)
+		no_exc = 1;
+		write(1, dollar, 2);
+		fflush(stdout);
+		handle_input_command(&buffer, &n_buffer, &no_exc,
+				&only_command, status, argc, argv, &err_count);
+		if (*buffer && no_exc)
 		{
-			if (errno == EACCES)
-				exit(126);
-			if (errno == ENOENT)
-			{
-				_eputs(av[0]);
-				_eputs(": 0: Can't open ");
-				_eputs(av[1]);
-				_eputchar('\n');
-				_eputchar(BUF_FLUSH);
-				exit(127);
-			}
-			return (EXIT_FAILURE);
+			tok_buf(buffer, args, del, command, env);
+			if (access(command, X_OK) == 0)
+				_fork(argc, argv, buffer, args, only_command, &status);
+			else
+				fprintf(stderr, "%s: %d: %s: not found\n",
+						argv[argc - 1], err_count++, only_command), fflush(stdout);
 		}
-		info->readfd = fd;
+		free(only_command);
 	}
-	populate_env_list(info);
-	read_history(info);
-	hsh(info, av);
-	return (EXIT_SUCCESS);
+	return (0);
 }
+
