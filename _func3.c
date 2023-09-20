@@ -78,7 +78,53 @@ void Jag_ls_check(char *ave[], char *buf, char *only)
 	}
 }
 }
+/**
+ * _getline - Read a line from a file stream
+ * @line: Pointer to a pointer that will store the read line
+ * @n: Pointer to the size of the buffer allocated for the line
+ * @stream: File stream to read from
+ * Return: Number of bytes read
+ */
+ssize_t _getline(char **line, size_t *n, FILE *stream)
+{
+	size_t size_buffer = *n, total_byt_read = 0;
+	ssize_t num_of_byt_reads;
+	char one_byte, *new_size_ptr;
 
+	if (line == NULL || n == NULL || stream == NULL)
+		return (-1);
+	if (*line == NULL)
+	{
+		size_buffer = 128;
+		*line = malloc(size_buffer);
+		if (*line == NULL)
+			return (-1);
+		*n = size_buffer;
+	}
+	while ((num_of_byt_reads = read(fileno(stream), &one_byte, 1)) > 0)
+	{
+		if (total_byt_read >= size_buffer - 1)
+		{
+			size_buffer += 128;
+			new_size_ptr = realloc(*line, size_buffer);
+			if (!new_size_ptr)
+				return (-1);
+			*n = size_buffer;
+			*line = new_size_ptr;
+		}
+		(*line)[total_byt_read++] = one_byte;
+		if (one_byte == '\n')
+			break;
+	}
+
+	if (total_byt_read == 0 && num_of_byt_reads <= 0)
+	{
+		return (-1);
+	}
+
+	(*line)[total_byt_read] = '\0';
+	return (total_byt_read);
+}
 /**
  * Jag_shell_exit - exit program
  *@status: status num to exit

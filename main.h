@@ -36,6 +36,7 @@ void Jag_non_interactive(int argc, char *argv[],
 		char *env[], int *pipe);
 char *Jag_take_only_cmd(char **buffer, int *no_exc,
 		int argc, char *argv[], int *n_err);
+ssize_t _getline(char **line, size_t *n, FILE *stream);
 void Jag_ls_check(char *ave[], char *buf, char *only);
 void Jag_change_dir(char *buffer, char *cmd, int argc, char *argv[], int *n_err);
 void Jag_comments(char **buf, int *no_exc);
