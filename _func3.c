@@ -38,7 +38,7 @@ char *Jag_take_only_cmd(char **buffer, int *no_exc, int argc,
 	if (Jag__strcmp(cmd, "cd") == 0)
 	{
 		*no_exc = 0;
-		change_dir(*buffer, cmd, argc, argv, n_err);
+		Jag_change_dir(*buffer, cmd, argc, argv, n_err);
 	}
 	return (cmd);
 }
