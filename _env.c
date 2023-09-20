@@ -9,7 +9,8 @@ void Jag__env(void)
 
 	while (*env_ptr)
 	{
-		_printf("%s\n", *env_ptr);
+		Jag__printf("%s\n", *env_ptr);
 		env_ptr++;
 	}
 }
+

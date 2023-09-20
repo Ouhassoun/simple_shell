@@ -22,14 +22,14 @@ void Jag_change_dir(char *buffer, char *cmd, int argc, char *argv[], int *n_err)
 			perror("cd"), free(buffer), free(cmd), exit(1);
 		setenv("OLDPWD", now, 1);
 	}
-	else if (_strcmp(token, "-") == 0)
+	else if (Jag__strcmp(token, "-") == 0)
 	{
 		if (back == NULL)
-			write(2, "cd: OLDPWD not set\n", _strlen("cd: OLDPWD not set\n"));
+			write(2, "cd: OLDPWD not set\n", Jag__strlen("cd: OLDPWD not set\n"));
 		if (chdir(back) != 0)
 			perror("cd"), free(buffer), free(cmd), exit(1);
 		setenv("OLDPWD", now, 1);
-		_printf("%s\n", back);
+		Jag__printf("%s\n", back);
 	}
 	else
 	{
@@ -124,14 +124,14 @@ void Jag_handle_input_command(char **buffer, size_t *n_buffer, int *no_exc,
 		(*buffer)[bytes - 1] = '\0';
 	trim_buffer(*buffer);
 	comments(buffer, no_exc);
-	if (_strcmp(*buffer, "exit") == 0)
+	if (Jag__strcmp(*buffer, "exit") == 0)
 		free(*buffer), exit(0);
-	if (_strcmp(*buffer, "env") == 0)
+	if (Jag__strcmp(*buffer, "env") == 0)
 	{
 		*no_exc = 0;
-		_env();
+		Jag__env();
 	}
-	*only_command = take_only_cmd(buffer, no_exc, argc, argv, n_err);
+	*only_command = Jag_take_only_cmd(buffer, no_exc, argc, argv, n_err);
 }
 
 /**

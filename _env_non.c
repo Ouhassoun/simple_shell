@@ -10,7 +10,7 @@ void Jag__env_non(int *no_exc)
 	*no_exc = 0;
 	while (*env_ptr)
 	{
-		_printf("%s\n", *env_ptr);
+		Jag__printf("%s\n", *env_ptr);
 		env_ptr++;
 	}
 }

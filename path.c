@@ -39,14 +39,14 @@ char *Jag_full_path(char *env[], char cmd[])
 			full_path[index] = '\0';
 		}
 	}
-	path_returned = path_check(full_path);
-	rslt = malloc(_strlen(path_returned) + 1);
+	path_returned = Jag_path_check(full_path);
+	rslt = malloc(Jag__strlen(path_returned) + 1);
 	if (!rslt)
 	{
 		perror("fail to allocate");
 		exit(1);
 	}
-	_strcpy(rslt, path_returned);
+	Jag__strcpy(rslt, path_returned);
 	return (rslt);
 }
 
@@ -75,7 +75,7 @@ char *Jag_path_check(char path[])
 			}
 			final_path[i] = '\0';
 			/*path_ex  = final_path;*/
-			_strcpy(path_ex, final_path);
+			Jag__strcpy(path_ex, final_path);
 			return (path_ex);
 		}
 		token = strtok(NULL, delim);

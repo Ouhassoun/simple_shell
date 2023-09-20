@@ -15,7 +15,7 @@ char *Jag_take_only_cmd(char **buffer, int *no_exc, int argc,
 	int i = 0;
 	char str_cmd[50], *cmd;
 
-	if (_strlen(*buffer) >= 50)
+	if (Jag__strlen(*buffer) >= 50)
 	{
 		perror("command to long\n");
 		free(*buffer), exit(1);
@@ -28,14 +28,14 @@ char *Jag_take_only_cmd(char **buffer, int *no_exc, int argc,
 		i++;
 	}
 	str_cmd[i] = '\0';
-	cmd = malloc(_strlen(str_cmd) + 1);
+	cmd = malloc(Jag__strlen(str_cmd) + 1);
 	if (!cmd)
 	{
 		perror("fail to allocate");
 		exit(1);
 	}
-	strcpy(cmd, str_cmd);
-	if (_strcmp(cmd, "cd") == 0)
+	Jag_strcpy(cmd, str_cmd);
+	if (Jag__strcmp(cmd, "cd") == 0)
 	{
 		*no_exc = 0;
 		change_dir(*buffer, cmd, argc, argv, n_err);
@@ -55,8 +55,8 @@ void Jag_ls_check(char *ave[], char *buf, char *only)
 	DIR *dir;
 	int index = 1;
 
-	if (_strcmp(only, "ls") == 0 || _strcmp(ave[0], "/usr/bin/ls") == 0 ||
-		_strcmp(ave[0], "/bin/ls") == 0)
+	if (Jag__strcmp(only, "ls") == 0 || Jag__strcmp(ave[0], "/usr/bin/ls") == 0 ||
+		Jag__strcmp(ave[0], "/bin/ls") == 0)
 {
 	while (ave[index])
 	{

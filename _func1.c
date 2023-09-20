@@ -78,18 +78,18 @@ void *Jag_c_memmov(void *dest, const void *src, size_t n)
 */
 void Jag_trim_buffer(char *buffer)
 {
-	size_t size = _strlen(buffer), i = 0;
+	size_t size = Jag__strlen(buffer), i = 0;
 
 	if (size == 0)
 		return;
 
-	while (_space((unsigned char)buffer[i]))
+	while (Jag__space((unsigned char)buffer[i]))
 		i++;
 
-	c_memmov(buffer, buffer + i, size - i + 1);
+	Jag_c_memmov(buffer, buffer + i, size - i + 1);
 	size -= i;
 
-	while (size > 0 && _space((unsigned char)buffer[size - 1]))
+	while (size > 0 && Jag__space((unsigned char)buffer[size - 1]))
 		size--;
 
 	buffer[size] = '\0';

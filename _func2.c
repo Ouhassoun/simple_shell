@@ -58,7 +58,7 @@ void Jag_tok_buf(char *buf, char *args[],
 		while (buf[i])
 			new_buf[j++] = buf[i++];
 		new_buf[j] = '\0';
-		_strcpy(buf, new_buf), free(find_path);
+		Jag__strcpy(buf, new_buf), free(find_path);
 	}
 	else if (buf[i] == '.' && buf[i + 1] == '/')
 	{
@@ -72,7 +72,7 @@ void Jag_tok_buf(char *buf, char *args[],
 		while (buf[i])
 			new_buf[j++] = buf[i++];
 		new_buf[j] = '\0';
-		_strcpy(buf, new_buf);
+		Jag__strcpy(buf, new_buf);
 	}
 	tok(&buf, &del, &token, &str, args);
 }
@@ -155,11 +155,11 @@ void Jag__printf(const char *format, ...)
 			if (*format == 's')
 			{
 				str = va_arg(args, char*);
-				write(1, str, _strlen(str));
+				write(1, str, Jag__strlen(str));
 			} else if (*format == 'd')
 			{
 				num = va_arg(args, int);
-				tostring(num);
+				Jag_tostring(num);
 			}
 		} else
 		{
