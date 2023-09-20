@@ -8,8 +8,8 @@
  * @argv: args vector
  * @n_err: num of status
 */
-void Jag_change_dir(char *buffer, char *cmd,
-		int argc, char *argv[], int *n_err)
+void Jag_change_dir(char *buffer, char *cmd, int argc,
+			char *argv[], int *n_err)
 {
 	char *token, *back = NULL, *now = NULL;
 
@@ -78,8 +78,8 @@ void Jag_comments(char **buf, int *no_exc)
  * @str: Pointer to the output string
  * @args: Array of arguments
  */
-void Jag_tok(char **buf, const char **del,
-		char **token, char **str, char *args[])
+void Jag_tok(char **buf, const char **del, char **token,
+			char **str, char *args[])
 {
 	int index;
 
@@ -124,8 +124,8 @@ void Jag_handle_input_command(char **buffer, size_t *n_buffer, int *no_exc,
 		free(*buffer), exit(1);
 	if ((*buffer)[bytes - 1] == '\n')
 		(*buffer)[bytes - 1] = '\0';
-	trim_buffer(*buffer);
-	comments(buffer, no_exc);
+	Jag_trim_buffer(*buffer);
+	Jag_comments(buffer, no_exc);
 	if (Jag__strcmp(*buffer, "exit") == 0)
 		free(*buffer), exit(0);
 	if (Jag__strcmp(*buffer, "env") == 0)
