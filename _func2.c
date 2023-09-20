@@ -49,7 +49,7 @@ void Jag_tok_buf(char *buf, char *args[],
 			i++;
 		}
 		get_cmd[i] = '\0';
-		find_path = full_path(env, get_cmd);
+		find_path = Jag_full_path(env, get_cmd);
 		while (find_path[j] != '\0')
 		{
 			new_buf[j] = find_path[j];
@@ -74,7 +74,7 @@ void Jag_tok_buf(char *buf, char *args[],
 		new_buf[j] = '\0';
 		Jag__strcpy(buf, new_buf);
 	}
-	tok(&buf, &del, &token, &str, args);
+	Jag_tok(&buf, &del, &token, &str, args);
 }
 
 /**
